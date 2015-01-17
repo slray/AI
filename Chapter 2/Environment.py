@@ -1,4 +1,5 @@
 import pprint
+import random
 
 class Tile :
     def  __init__(self, Location):
@@ -67,8 +68,13 @@ class Environment:
             
     def DirtyRoom(self, position=None):
         if not position:
-            position = self.postion
+            position = self.position
         self.room[position].SetDirty()
+    
+    def RandomDirty(self):
+        for tile in self.room:
+            if random.randint(1,100) < 5: tile.SetDirty()
+        
 
 
 ## test Sequence
@@ -84,6 +90,6 @@ testPerceptSequence = [l,r,r,s,l,l]
 env.ReceiveAction(r)
 results = env.ReceiveActions(testPerceptSequence)
 pprint.pprint(results)
-
+env.RandomDirty()
 env.PrintRooms()
     
