@@ -12,7 +12,7 @@ class vacuum:
     def right(self):
         pass
     
-    def suck(self, ):
+    def suck(self):
         pass
     
     def NoOp(self):
