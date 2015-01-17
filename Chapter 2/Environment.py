@@ -19,17 +19,17 @@ class Tile :
     
 class Environment:
     def __init__ (self, size = 2):
-        self.postion = 0
+        self.position = 0
         self.ResizeRoom(size)
         self.actions = {"L":self.MoveLeft,"R":self.MoveRight,"S":self.Clean, "N":self.Nothing}
         
     def Nothing(self):
-        print "Doing Noithing"
+        print "Doing Nothing"
         pass
     
     def Clean(self):
         print "Cleaning"
-        self.room[self.postion].SetClean()
+        self.room[self.position].SetClean()
 
     def MoveLeft(self):
         print "Moving Left"
@@ -40,23 +40,23 @@ class Environment:
         return self.Move(1)
 
     def Move(self, step):
-        if (self.postion + step) in range(0,len(self.room),1):
-            self.postion += step
+        if (self.position + step) in range(0,len(self.room),1):
+            self.position += step
             return True
         return False
     
-    def RecieveActions(self, actions):
+    def ReceiveActions(self, actions):
         retVars = []
         for action in actions:
-            retVars.append(self.RecieveAction(action))
+            retVars.append(self.ReceiveAction(action))
         return retVars
     
-    def RecieveAction(self, action):
+    def ReceiveAction(self, action):
         if self.actions.has_key(action):
             return self.actions[action]()
     
     def ResizeRoom(self, size):
-        self.postion = 0
+        self.position = 0
         self.room = []
         for i in range(0,size,1):
             self.room.append(Tile(i))
@@ -65,10 +65,10 @@ class Environment:
         for tile in self.room:
             print tile
             
-    def DirtyRoom(self, postion=None):
-        if not postion:
-            postion = self.postion
-        self.room[postion].SetDirty()
+    def DirtyRoom(self, position=None):
+        if not position:
+            position = self.postion
+        self.room[position].SetDirty()
 
 
 ## test Sequence
@@ -78,11 +78,11 @@ env.PrintRooms()
 l = 'L'
 r = "R"
 s = "S"
-n= "N"
+n = "N"
 testPercepts = [l,r,s,n]
 testPerceptSequence = [l,r,r,s,l,l]
-env.RecieveAction(r)
-results = env.RecieveActions(testPerceptSequence)
+env.ReceiveAction(r)
+results = env.ReceiveActions(testPerceptSequence)
 pprint.pprint(results)
 
 env.PrintRooms()
