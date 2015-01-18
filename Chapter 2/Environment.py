@@ -82,19 +82,21 @@ class Environment:
 
 
 ## test Sequence
-env = Environment(2)
-env.DirtyRoom(1)
-env.PrintRooms()
-l = 'L'
-r = "R"
-s = "S"
-n = "N"
-c = "C"
-testPercepts = [l,r,s,n,c]
-testPerceptSequence = [l,r,r,s,l,l]
-env.Action(r)
-results = env.ReceiveActions(testPerceptSequence)
-pprint.pprint(results)
-env.RandomDirty()
-env.PrintRooms()
+
+def test(): 
+    env = Environment(2)
+    env.DirtyRoom(1)
+    env.PrintRooms()
+    l = 'L'
+    r = "R"
+    s = "S"
+    n = "N"
+    c = "C"
+    testPercepts = [l,r,s,n,c]
+    testPerceptSequence = [l,r,r,s,l,l]
+    env.Action(r)
+    results = env.ReceiveActions(testPerceptSequence)
+    pprint.pprint(results)
+    env.RandomDirty()
+    env.PrintRooms()
     
