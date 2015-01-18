@@ -61,7 +61,7 @@ class Environment:
             return self.actions[action]()
     
     def ResizeRoom(self, size):
-        self.position = 0
+        self.position = random.randint(0, size-1)
         self.room = []
         for i in range(0,size,1):
             self.room.append(Tile(i))

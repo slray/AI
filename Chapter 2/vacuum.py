@@ -15,12 +15,12 @@ class vacuum:
      
     def left(self):
         self.Moves += 1
-        self.environment.MoveLeft()
+        self.environment.Action("L")
         pass
     
     def right(self):
         self.Moves += 1
-        self.environment.MoveRight()
+        self.environment.Action("R")
         pass
     
     def suck(self):
@@ -30,5 +30,15 @@ class vacuum:
         self.environment.Action("S")
         pass
     
+    def ReflexAction(self):
+        if (self.environment.Action("C")):
+            self.suck()
+        elif (self.environment.position == 0):
+            self.right()
+        elif (self.environment.position == 1):
+            self.left()
+        else:
+            self.NoOp()
+            
     def NoOp(self):
         pass
