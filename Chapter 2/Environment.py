@@ -22,7 +22,7 @@ class Environment:
     def __init__ (self, size = 2):
         self.position = 0
         self.ResizeRoom(size)
-        self.actions = {"L":self.MoveLeft,"R":self.MoveRight,"S":self.Clean, "N":self.Nothing,"C":CheckRoom}
+        self.actions = {"L":self.MoveLeft,"R":self.MoveRight,"S":self.Clean, "N":self.Nothing,"C":self.CheckRoom}
         
     def Nothing(self):
         print "Doing Nothing"
@@ -39,6 +39,10 @@ class Environment:
     def MoveRight(self):
         print "Moving Right"
         return self.Move(1)
+        
+    def CheckRoom(self):
+        "Checking Room"
+        return self.room[self.position].isDirty()
 
     def Move(self, step):
         if (self.position + step) in range(0,len(self.room),1):
@@ -46,16 +50,13 @@ class Environment:
             return True
         return False
     
-    def CheckRoom(self):
-        return self.room[self.position].isDirty()
-    
     def ReceiveActions(self, actions):
         retVars = []
         for action in actions:
-            retVars.append(self.ReceiveAction(action))
+            retVars.append(self.Action(action))
         return retVars
     
-    def ReceiveAction(self, action):
+    def Action(self, action):
         if self.actions.has_key(action):
             return self.actions[action]()
     
@@ -88,9 +89,10 @@ l = 'L'
 r = "R"
 s = "S"
 n = "N"
-testPercepts = [l,r,s,n]
+c = "C"
+testPercepts = [l,r,s,n,c]
 testPerceptSequence = [l,r,r,s,l,l]
-env.ReceiveAction(r)
+env.Action(r)
 results = env.ReceiveActions(testPerceptSequence)
 pprint.pprint(results)
 env.RandomDirty()
