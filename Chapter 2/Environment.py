@@ -22,7 +22,7 @@ class Environment:
     def __init__ (self, size = 2):
         self.position = 0
         self.ResizeRoom(size)
-        self.actions = {"L":self.MoveLeft,"R":self.MoveRight,"S":self.Clean, "N":self.Nothing}
+        self.actions = {"L":self.MoveLeft,"R":self.MoveRight,"S":self.Clean, "N":self.Nothing,"C":CheckRoom}
         
     def Nothing(self):
         print "Doing Nothing"
@@ -45,6 +45,9 @@ class Environment:
             self.position += step
             return True
         return False
+    
+    def CheckRoom(self):
+        return self.room[self.position].isDirty()
     
     def ReceiveActions(self, actions):
         retVars = []
