@@ -36,30 +36,35 @@ class EightSquares:
         temp[j] = chartemp
         self.state = "".join(temp)
         
+	def assignElement(self, i, value):
+		temp = list(self.state)
+		temp[i] = value
+		self.state = "".join(temp)
+		
     def TurnLeft(self):
         temp = deepcopy(self)
-        temp.state[0] = self.state[6]
-        temp.state[1] = self.state[3]
-        temp.state[2] = self.state[0]
-        temp.state[3] = self.state[7]
-        temp.state[5] = self.state[1]
-        temp.state[6] = self.state[8]
-        temp.state[7] = self.state[5]
-        temp.state[8] = self.state[2]
+        temp.assignElement(0,self.state[6])
+        temp.assignElement(1,self.state[3])
+        temp.assignElement(2,self.state[0])
+        temp.assignElement(3,self.state[7])
+        temp.assignElement(5,self.state[1])
+        temp.assignElement(6,self.state[8])
+        temp.assignElement(7,self.state[5])
+        temp.assignElement(8,self.state[2])
         temp.TurnSignal -= 1;
         self = deepcopy(temp)
         del temp
         
     def TurnRight(self):
         temp = deepcopy(self)
-        temp.state[0] = self.state[2]
-        temp.state[1] = self.state[5]
-        temp.state[2] = self.state[8]
-        temp.state[3] = self.state[1]
-        temp.state[5] = self.state[7]
-        temp.state[6] = self.state[0]
-        temp.state[7] = self.state[3]
-        temp.state[8] = self.state[6]
+        temp.assignElement(0,self.state[2])
+        temp.assignElement(1,self.state[5])
+        temp.assignElement(2,self.state[8])
+        temp.assignElement(3,self.state[1])
+        temp.assignElement(5,self.state[7])
+        temp.assignElement(6,self.state[0])
+        temp.assignElement(7,self.state[3])
+        temp.assignElement(8,self.state[6])
         temp.TurnSignal += 1
         self = deepcopy(temp)
         del temp
