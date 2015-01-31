@@ -14,10 +14,23 @@ class Arbor:
         else:
             print "No solution yet"       
         self.Configuration.MakeNextStates()
-        
-#    def LeafCheck(self):
-#        if (self.Configuration.HowManyKids() == 0):
-            
+        self.CurrentBranch = self.Configuration
+     
+    def GetRoot(self):
+        return self.CurrentBranch
+    
+    def GetChild(self):
+        if (self.CurrentNode.HowManyChildren() == 0):
+            return CurrentBranch
+        else:
+            return CurrentBranch.children[0]
+     
+    def RemoveChild(self, i):
+        if (self.CurrentNode.HowManyChildren() < i):
+            return
+        else:
+            del self.CurrentNode.children[i]
+    
         
 class EightSquares:
     #code
@@ -42,7 +55,6 @@ class EightSquares:
         return Offspring
         
     def StringSwap(self, i, j):
-        print "Swapping ", i, j
         nodetemp = self.state[i]
         self.state[i] = self.state[j]
         self.state[j] = nodetemp
@@ -69,7 +81,6 @@ class EightSquares:
         
     def MakeNextStates(self):
         self.FindTheHole()
-        print self.state, self.hole
         self.children = []
         if (self.hole == 0):
             self.AddChild(0,1)
@@ -105,11 +116,13 @@ class EightSquares:
             self.AddChild(5, 8)
             self.AddChild(7, 8)
  
+print "\n\nStarting a new Problem"
 Problem = Arbor()
-
+CurrentNode = Problem.GetRoot()
+Kids = CurrentNode.HowManyKids()
 #del Problem.children[Kids-1]
 #Kids = Problem.HowManyKids()
-#print "Kids = ", Kids
+print "Kids = ", Kids
 
     
      
