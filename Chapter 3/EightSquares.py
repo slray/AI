@@ -7,142 +7,127 @@ class EightSquares:
     #code
 
     def __init__(self):
-        self.state = "012345678"
+        self.state = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         self.hole = 0
         self.TurnSignal = 0
         self.children = []
-    
-    def Shuffle(self):
-        temp = list(self.state)
-        shuffle(temp)
-        self.state = "".join(temp)
-            
+              
     def FindTheHole(self):
-        temp = list(self.state)
-        for i in range(9):
-            print "Checking for hole #", i
-            if (temp[i]==str(0)):
+        for i in range(0,9):
+            print "Checking for hole ", self.state[i]
+            if (self.state[i]==0):
                 self.hole = i
-                print "Hole found at ", self.hole
+                print "\nHole found at ", self.hole
                 return i
             
-    def __str__(self):
-        return self.state + "\n" + self.state[0:3] + "\n" + self.state[3:6] + "\n" + self.state[6:9] + "\n"
+ #   def __str__(self):
+ #      return self.state[0], self.state[1], self.state[2] + "\n"
     
     def StringSwap(self, i, j):
-        temp = list(self.state)
-        chartemp = temp[i]
-        temp[i] = temp[j]
-        temp[j] = chartemp
-        self.state = "".join(temp)
-        
-	def assignElement(self, i, value):
-		temp = list(self.state)
-		temp[i] = value
-		self.state = "".join(temp)
-		
-    def TurnLeft(self):
-        temp = deepcopy(self)
-        temp.assignElement(0,self.state[6])
-        temp.assignElement(1,self.state[3])
-        temp.assignElement(2,self.state[0])
-        temp.assignElement(3,self.state[7])
-        temp.assignElement(5,self.state[1])
-        temp.assignElement(6,self.state[8])
-        temp.assignElement(7,self.state[5])
-        temp.assignElement(8,self.state[2])
-        temp.TurnSignal -= 1;
-        self = deepcopy(temp)
-        del temp
-        
-    def TurnRight(self):
-        temp = deepcopy(self)
-        temp.assignElement(0,self.state[2])
-        temp.assignElement(1,self.state[5])
-        temp.assignElement(2,self.state[8])
-        temp.assignElement(3,self.state[1])
-        temp.assignElement(5,self.state[7])
-        temp.assignElement(6,self.state[0])
-        temp.assignElement(7,self.state[3])
-        temp.assignElement(8,self.state[6])
-        temp.TurnSignal += 1
-        self = deepcopy(temp)
-        del temp
-    
-    def ReturnHome(self):
-        while (self.TurnSignal != 0):
-            if (self.TurnSignal > 0):
-                self.Turnleft()
-            else:    self.TurnRight()
+        print "Swapping ", i, j
+        nodetemp = self.state[i]
+        self.state[i] = self.state[j]
+        self.state[j] = nodetemp
+         
         
     def MakeNextStates(self):
         self.FindTheHole()
         print self.state, self.hole, self.TurnSignal
         self.children = []
-        if (self.hole%2 == 1):  #hole in odd position
-            if (self.hole == 3): self.TurnRight()
-            if (self.hole == 5): self.TurnLeft()
-            if (self.hole == 7):
-                self.TurnLeft()
-                self.TurnLeft()
+        if (self.hole == 0):
             child1 = deepcopy(self)
-            child1.StringSwap(0,1)
-            child1.ReturnHome()
-            self.children.append(child1)
-            
             child2 = deepcopy(self)
-            child2.StringSwap(1,2)
-            child2.ReturnHome()
-            self.children.append(child2)
-            
-            child3 = deepcopy(self)
-            child3.StringSwap(1,4)
-            child3.ReturnHome()
-            self.children.append(child3)
-                
-        elif (self.hole%2 == 0 and self.hole != 4):  #hole in even position, but not the center
-            if (self.hole == 2): self.TurnLeft()
-            if (self.hole == 6): self.TurnRight()
-            if (self.hole == 8):
-                self.TurnLeft()
-                self.TurnLeft()
-            child1 = deepcopy(self)
             child1.StringSwap(0,1)
-            child1.ReturnHome()
-            self.children.append(child1)
-           
-            child2 = deepcopy(self)
             child2.StringSwap(0,3)
-            child2.ReturnHome()                
-            self.children.append(child2) 
-               
-        elif (self.hole == 4):  #hole in the center
-            child1 = deepcopy(self)
-            child1.StringSwap(1,4)
-            child1.ReturnHome()
             self.children.append(child1)
-       
-            child2 = deepcopy(self)
-            child2.StringSwap(3,4)
-            child2.ReturnHome()
             self.children.append(child2)
-            
+        elif (self.hole == 1):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
             child3 = deepcopy(self)
-            child3.StringSwap(4,5)
-            child3.ReturnHome()
+            child1.StringSwap(0,1)
+            child2.StringSwap(1,2)
+            child3.StringSwap(1,4)
+            self.children.append(child1)
+            self.children.append(child2)
             self.children.append(child3)
-            
+        elif (self.hole == 2):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child1.StringSwap(2,1)
+            child2.StringSwap(2,5)
+            self.children.append(child1)
+            self.children.append(child2)
+        elif (self.hole == 3):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child3 = deepcopy(self)
+            child1.StringSwap(0,3)
+            child2.StringSwap(3,4)
+            child3.StringSwap(3,6)
+            self.children.append(child1)
+            self.children.append(child2)
+            self.children.append(child3)
+        elif (self.hole == 4):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child3 = deepcopy(self)
             child4 = deepcopy(self)
+            child1.StringSwap(1,4)
+            child2.StringSwap(3,4)
+            child3.StringSwap(4,5)
             child4.StringSwap(4,7)
-            child4.ReturnHome()
+            self.children.append(child1)
+            self.children.append(child2)
+            self.children.append(child3)
             self.children.append(child4)
-
+        elif (self.hole == 5):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child3 = deepcopy(self)
+            child1.StringSwap(3,5)
+            child2.StringSwap(4,5)
+            child3.StringSwap(5,8)
+            self.children.append(child1)
+            self.children.append(child2)
+            self.children.append(child3)
+        elif (self.hole == 6):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child1.StringSwap(3,6)
+            child2.StringSwap(6,7)
+            self.children.append(child1)
+            self.children.append(child2)
+        elif (self.hole == 7):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child3 = deepcopy(self)
+            child1.StringSwap(4,7)
+            child2.StringSwap(6,7)
+            child3.StringSwap(7,8)
+            self.children.append(child1)
+            self.children.append(child2)
+            self.children.append(child3)
+        elif (self.hole == 8):
+            child1 = deepcopy(self)
+            child2 = deepcopy(self)
+            child1.StringSwap(5,8)
+            child2.StringSwap(7,8)
+            self.children.append(child1)
+            self.children.append(child2)
+ 
 Problem = EightSquares()
-Problem.Shuffle()
-print Problem
+shuffle(Problem.state)
+print "New problem"
+print Problem.state
+#PrintMe(Problem)
+print "\n"
 Problem.MakeNextStates()
+print Problem.state
+print "Children\n"
 for child in Problem.children:
-    print child
+    print child.state
+    print "\n"
 
     
      
