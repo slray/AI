@@ -6,9 +6,7 @@ import math
 class Arbor:
     def __init__(self):
         self.Configuration = EightSquares()
-        print self.Configuration.state
         shuffle(self.Configuration.state)
-        print self.Configuration.state
         if (self.Configuration.GoalState()):
             print "Found a solution"
         else:
@@ -19,18 +17,11 @@ class Arbor:
     def GetRoot(self):
         return self.CurrentBranch
     
-    def GetChild(self):
-        if (self.CurrentNode.HowManyChildren() == 0):
-            return CurrentBranch
-        else:
-            return CurrentBranch.children[0]
-     
     def RemoveChild(self, i):
         if (self.CurrentNode.HowManyChildren() < i):
             return
         else:
             del self.CurrentNode.children[i]
-    
         
 class EightSquares:
     #code
@@ -64,7 +55,7 @@ class EightSquares:
             if (self.state[i] != i):
                 return 0
         return 1
-    
+      
     def SameState(Mate):
         for i in range (0, 9):
             if (self.state[i] != Mate.state[i]):
@@ -79,6 +70,19 @@ class EightSquares:
         OffSpring.state[j] = nodeTemp
         self.children.append(OffSpring)
         
+    def RemoveChild(self, i):
+        if (self.HowManyChildren() < i):
+            return 0
+        else:
+            del self.children[i]
+            return 1
+        
+    def GetChild(self, i):
+        if (self.HowManyKids() < i):
+            return self
+        else:
+            return self.children[i]
+    
     def MakeNextStates(self):
         self.FindTheHole()
         self.children = []
@@ -119,10 +123,23 @@ class EightSquares:
 print "\n\nStarting a new Problem"
 Problem = Arbor()
 CurrentNode = Problem.GetRoot()
+print CurrentNode.state
+Kids = CurrentNode.HowManyKids()
+print "Kids = ", Kids
+CurrentNode = CurrentNode.GetChild(0)
+print CurrentNode.state
+CurrentNode.MakeNextStates()
 Kids = CurrentNode.HowManyKids()
 #del Problem.children[Kids-1]
 #Kids = Problem.HowManyKids()
 print "Kids = ", Kids
+for i in range (1, 10):
+    CurrentNode.MakeNextStates()
+    LastNode = deepcopy(CurrentNode)
+    CurrentNode = LastNode.GetChild(0)
+    Kids = LastNode.HowManyKids()
+    print i, CurrentNode.state, Kids
+    
 
     
      
