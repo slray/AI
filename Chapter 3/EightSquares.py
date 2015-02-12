@@ -119,10 +119,28 @@ class EightSquares:
         elif (self.hole == 8):
             self.AddChild(5, 8)
             self.AddChild(7, 8)
- 
+            
+    def SolutionProximity(self):
+        HowMuch = 0
+        LUT = [[0 for x in range(9)] for y in range(9)]
+        LUT[0] = {0, 1, 2, 1, 2, 3, 2, 3, 4}
+        LUT[1] = {1, 0, 1, 2, 1, 2, 3, 2, 3}
+        LUT[2] = {2, 1, 0, 3, 2, 1, 4, 3, 2}
+        LUT[3] = {1, 2, 3, 0, 1, 2, 1, 2, 3}
+        LUT[4] = {2, 1, 2, 1, 0, 1, 2, 1, 2}
+        LUT[5] = {3, 2, 1, 2, 1, 0, 3, 2, 1}
+        LUT[6] = {2, 3, 4, 1, 2, 3, 0, 1, 2}
+        LUT[7] = {3, 2, 3, 2, 1, 2, 1, 0, 1}
+        LUT[8] = {4, 3, 2, 3, 2, 1, 2, 1, 0}
+        for i in range(0, 9):
+            HowMuch += LUT[i][self.state[i]]
+        return HowMuch
+        
 print "\n\nStarting a new Problem"
 Problem = Arbor()
 CurrentNode = Problem.GetRoot()
+Howfar = CurrentNode.SolutionProximity()
+print "HowFar = ". Howfar
 print CurrentNode.state
 Kids = CurrentNode.HowManyKids()
 print "Kids = ", Kids
