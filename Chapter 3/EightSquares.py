@@ -5,14 +5,14 @@ import math
 
 class Arbor:
     def __init__(self):
-        self.Configuration = EightSquares()
-        shuffle(self.Configuration.state)
-        if (self.Configuration.GoalState()):
+        self = EightSquares()
+        shuffle(self.state)
+        if (self.GoalState()):
             print "Found a solution"
-        else:
-            print "No solution yet"       
-        self.Configuration.MakeNextStates()
-        self.CurrentBranch = self.Configuration
+ #       else:
+ #           print "No solution yet"       
+ #       self.Configuration.MakeNextStates()
+ #       self.CurrentBranch = self.Configuration
      
     def GetRoot(self):
         return self.CurrentBranch
@@ -51,10 +51,9 @@ class EightSquares:
         self.state[j] = nodetemp
     
     def GoalState(self):
-        for i in range (0,9):
-            if (self.state[i] != i):
-                return 0
-        return 1
+        if (self.SolutionProximity() == 0):
+            return 1
+        return 0
       
     def SameState(Mate):
         for i in range (0, 9):
@@ -68,7 +67,11 @@ class EightSquares:
         nodeTemp = OffSpring.state[i]
         OffSpring.state[i] = OffSpring.state[j]
         OffSpring.state[j] = nodeTemp
+        OffSpring.away = OffSpring.SolutionProximity()
+        print OffSpring.state, OffSpring.away
+#        if (OffSpring.away < self.away):
         self.children.append(OffSpring)
+        
         
     def RemoveChild(self, i):
         if (self.HowManyChildren() < i):
@@ -83,6 +86,17 @@ class EightSquares:
         else:
             return self.children[i]
     
+    def GetFavoriteChild(self):
+        if (self.HowManyChildren() == 0):
+            return self
+        GoldenBoy = self.children[0]
+        Proximity = GoldenBoy.SolutionProximity()
+        for i in range(1, self.HowManyChildren()):
+            if (self.children[i].SolutionProximity() < Proximity):
+                GoldenBoy = self.children[i]
+                Proximity = GoldenBoy.SolutionProximity()
+        return GoldenBoy            
+            
     def MakeNextStates(self):
         self.FindTheHole()
         self.children = []
@@ -123,40 +137,33 @@ class EightSquares:
     def SolutionProximity(self):
         HowMuch = 0
         LUT = [[0 for x in range(9)] for y in range(9)]
-        LUT[0] = {0, 1, 2, 1, 2, 3, 2, 3, 4}
-        LUT[1] = {1, 0, 1, 2, 1, 2, 3, 2, 3}
-        LUT[2] = {2, 1, 0, 3, 2, 1, 4, 3, 2}
-        LUT[3] = {1, 2, 3, 0, 1, 2, 1, 2, 3}
-        LUT[4] = {2, 1, 2, 1, 0, 1, 2, 1, 2}
-        LUT[5] = {3, 2, 1, 2, 1, 0, 3, 2, 1}
-        LUT[6] = {2, 3, 4, 1, 2, 3, 0, 1, 2}
-        LUT[7] = {3, 2, 3, 2, 1, 2, 1, 0, 1}
-        LUT[8] = {4, 3, 2, 3, 2, 1, 2, 1, 0}
+        LUT[0] = [2, 0, 1, 2, 1, 3, 2, 3, 4]
+        LUT[1] = [1, 1, 0, 1, 2, 2, 3, 2, 3]
+        LUT[2] = [2, 1, 1, 0, 3, 1, 4, 3, 2]
+        LUT[3] = [1, 1, 2, 3, 0, 2, 1, 2, 3]
+        LUT[4] = [0, 2, 1, 2, 1, 1, 2, 1, 2]
+        LUT[5] = [1, 3, 2, 1, 2, 0, 3, 2, 1]
+        LUT[6] = [2, 2, 3, 4, 1, 3, 0, 1, 2]
+        LUT[7] = [1, 3, 2, 3, 2, 2, 1, 0, 1]
+        LUT[8] = [2, 4, 3, 2, 3, 1, 2, 1, 0]
         for i in range(0, 9):
-            HowMuch += LUT[i][self.state[i]]
+            HowMuch += LUT[self.state[i]][i]
+        print HowMuch, self.state
         return HowMuch
+
+
+
         
 print "\n\nStarting a new Problem"
-Problem = Arbor()
-CurrentNode = Problem.GetRoot()
+Problem = EightSquares()
+shuffle(Problem.state)
+CurrentNode = Problem
+print CurrentNode
 Howfar = CurrentNode.SolutionProximity()
-print "HowFar = ". Howfar
-print CurrentNode.state
-Kids = CurrentNode.HowManyKids()
-print "Kids = ", Kids
-CurrentNode = CurrentNode.GetChild(0)
-print CurrentNode.state
 CurrentNode.MakeNextStates()
-Kids = CurrentNode.HowManyKids()
-#del Problem.children[Kids-1]
-#Kids = Problem.HowManyKids()
-print "Kids = ", Kids
-for i in range (1, 10):
-    CurrentNode.MakeNextStates()
-    LastNode = deepcopy(CurrentNode)
-    CurrentNode = LastNode.GetChild(0)
-    Kids = LastNode.HowManyKids()
-    print i, CurrentNode.state, Kids
+NextNode = CurrentNode.GetFavoriteChild()
+print NextNode
+Node.state, CurrentNode.away
     
 
     
