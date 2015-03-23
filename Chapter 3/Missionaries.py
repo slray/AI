@@ -6,7 +6,10 @@ class bank:
         self.boat = boat
         
     def __str__(self ):
-        return "Side: " + str(self.side) +" M: "+str(self.missionaries)+ " C: "+str(self.cannibals)+" Boat: "+str(self.boat)
+        if self.boat:
+            return "Side: " + str(self.side) +" :: M: "+str(self.missionaries)+ " C: "+str(self.cannibals)+" Boat: True "
+        return "Side: " + str(self.side) +" :: M: "+str(self.missionaries)+ " C: "+str(self.cannibals)+" Boat: False"
+        
     
     def isValid(self):
         if self.missionaries in range(0,4,1) and self.cannibals in range(0,4,1):
@@ -33,7 +36,7 @@ class state:
         self.parent = parent
     
     def __str__(self):
-        return "State: " + str(self.eastBank) + " || " + str(self.westBank)
+        return "State: " + str(self.eastBank) + " |::| " + str(self.westBank)
     
     def __eq__(self,other):
         return str(self) == str(other)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from copy import deepcopy
 from random import shuffle
+import random
 import math
 
 class EightSquares:
@@ -102,7 +103,7 @@ class TileConfiguration:
         return HowMuch
     
     def Randomize(self):
-        shuffle.shuffle(self.state)
+        random.shuffle(self.state)
         
     def TileSwapper(self, i, j):
         temp = state[i]
@@ -123,6 +124,6 @@ class TileConfiguration:
                            
 Problem = EightSquares()
 print Problem
-#Problem.Arrangement.Randomize()
+Problem.Arrangement.Randomize()
 
 print Problem.Arrangement
