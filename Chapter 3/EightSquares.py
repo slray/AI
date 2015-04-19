@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from copy import deepcopy
 from random import shuffle
-import random
+from random import randint
 import math
 
 class EightSquares:
@@ -12,29 +12,28 @@ class EightSquares:
     def MakeNextMove(self):
         hole = self.Arrangement.FindTheBlank()
         Move = TileConfiguration()
+        BestCost = 2000
+        Cost = 4000
         if (hole == 0):
-            if (self.PreviousMove[0] == 1 and self.PreviousMove[1] == 0):
+            if self.PreviousMove[0] == 1 and self.PreviousMove[1] == 0:
                 BestCost = 1000
                 SwapID = 0
-            elif():
+            else:
                 Move.state = deepcopy(self.Arrangement.state)
-                print Move
                 Move.TileSwapper(0,1)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 3 or self.PreviousMove[1] != 0):
-                Move = deepcopy(self.Arrangement.state)
-                print "Best Cost = ", BestCost
+                Move = deepcopy(self.Arrangement)
                 Move.TileSwapper(0,3)
                 Cost = Move.SolutionDistance()
-            if (Cost < BestCost):
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
-            print BestCost, SwapID
             if (SwapID == 0):
                 self.Arrangement.TileSwapper(0, 1)
                 self.PreviousMove = [0, 1]
-            elif(SwapID == 1):
+            else:
                 self.Arrangement.TileSwapper(0, 3)
                 self.PreviousMove = [0, 3]
                 
@@ -42,22 +41,22 @@ class EightSquares:
             if (self.PreviousMove[0] == 0 and self.PreviousMove[1] == 1):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(1, 0)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 2 or self.PreviousMove[1] != 1):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(1, 2)
-                Cost = Move1.SolutionDistance()
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(1, 2)
+                Cost = Move.SolutionDistance()
             if (Cost < BestCost):
                 BestCost = Cost
                 SwapID = 1
             if (self.PreviousMove[0] != 4 or self.PreviousMove[1] != 1):
-                Move2 = deepcopy(self.Arrangement)
-                Move2.TileSwapper(1, 4)
-                Cost = Move2.SolutionDistance()
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(1, 4)
+                Cost = Move.SolutionDistance()
             if (Cost < BestCost):
                 BestCost = Cost
                 SwapID = 2
@@ -68,7 +67,7 @@ class EightSquares:
             elif(SwapID == 1):
                 self.Arrangement.TileSwapper(1, 2)
                 self.PreviousMove = [1, 2]
-            elif(SwapId == 2):
+            elif(SwapID == 2):
                 self.Arrangement.TileSwapper(1, 4)
                 self.PreviousMove = [1, 4]
                 
@@ -76,22 +75,22 @@ class EightSquares:
             if (self.PreviousMove[0] == 1 and self.PreviousMove[1] == 2):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(2, 1)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 5 or self.PreviousMove[1] != 2):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(2, 5)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(2, 5)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (SwapID == 0):
                 self.Arrangement.TileSwapper(2, 1)
                 self.PreviousMove = [2, 1]
-            elif(SwapID == 1):
+            elif (SwapID == 1):
                 self.Arrangement.TileSwapper(2, 5)
                 self.PreviousMove = [2, 5]
 
@@ -99,23 +98,23 @@ class EightSquares:
             if (self.PreviousMove[0] == 0 and self.PreviousMove[1] == 3):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(3, 0)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 4 or self.PreviousMove[1] != 3):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(3, 4)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(3, 4)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (self.PreviousMove[0] != 6 or self.PreviousMove[1] != 3):
-                Move2 = deepcopy(self.Arrangement)
-                Move2.TileSwapper(3, 6)
-                Cost = Move2.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(3, 6)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 2
                 
@@ -125,7 +124,7 @@ class EightSquares:
             elif(SwapID == 1):
                 self.Arrangement.TileSwapper(3, 4)
                 self.PreviousMove = [3, 4]
-            elif(SwapId == 2):
+            elif(SwapID == 2):
                 self.Arrangement.TileSwapper(3, 6)
                 self.PreviousMove = [3, 6]
                 
@@ -133,30 +132,30 @@ class EightSquares:
             if (self.PreviousMove[0] == 1 and self.PreviousMove[1] == 4):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(4, 1)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 3 or self.PreviousMove[1] != 4):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(4, 3)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(4, 3)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (self.PreviousMove[0] != 5 or self.PreviousMove[1] != 4):
-                Move2 = deepcopy(self.Arrangement)
-                Move2.TileSwapper(4, 5)
-                Cost = Move2.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(4, 5)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 2
             if (self.PreviousMove[0] != 7 or self.PreviousMove[1] != 4):
-                Move3 = deepcopy(self.Arrangement)
-                Move3.TileSwapper(4, 7)
-                Cost = Move3.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(4, 7)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 3
                 
@@ -166,10 +165,10 @@ class EightSquares:
             elif(SwapID == 1):
                 self.Arrangement.TileSwapper(4, 3)
                 self.PreviousMove = [4, 3]
-            elif(SwapId == 2):
+            elif(SwapID == 2):
                 self.Arrangement.TileSwapper(4, 5)
                 self.PreviousMove = [4, 5]
-            elif(SwapId == 3):
+            elif(SwapID == 3):
                 self.Arrangement.TileSwapper(4, 7)
                 self.PreviousMove = [4, 7]
 
@@ -177,23 +176,23 @@ class EightSquares:
             if (self.PreviousMove[0] == 2 and self.PreviousMove[1] == 5):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(5, 2)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 4 or self.PreviousMove[1] != 5):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(5, 4)
-                Cost = Move1SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(5, 4)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (self.PreviousMove[0] != 8 or self.PreviousMove[1] != 5):
-                Move2 = deepcopy(self.Arrangement)
-                Move2.TileSwapper(5, 8)
-                Cost = Move2.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(5, 8)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 2
                 
@@ -203,7 +202,7 @@ class EightSquares:
             elif(SwapID == 1):
                 self.Arrangement.TileSwapper(5, 4)
                 self.PreviousMove = [5, 4]
-            elif(SwapId == 2):
+            elif(SwapID == 2):
                 self.Arrangement.TileSwapper(5, 8)
                 self.PreviousMove = [5, 8]
 
@@ -211,16 +210,16 @@ class EightSquares:
             if (self.PreviousMove[0] == 3 and self.PreviousMove[1] == 6):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(6, 3)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 7 or self.PreviousMove[1] != 6):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(6, 7)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(6, 7)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (SwapID == 0):
@@ -234,23 +233,23 @@ class EightSquares:
             if (self.PreviousMove[0] == 4 and self.PreviousMove[1] == 7):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(7, 4)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 6 or self.PreviousMove[1] != 7):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(7, 6)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(7, 6)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (self.PreviousMove[0] != 8 or self.PreviousMove[1] != 7):
-                Move2 = deepcopy(self.Arrangement)
-                Move2.TileSwapper(7, 8)
-                Cost = Move2.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(7, 8)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 2
                 
@@ -260,7 +259,7 @@ class EightSquares:
             elif(SwapID == 1):
                 self.Arrangement.TileSwapper(7, 6)
                 self.PreviousMove = [7, 6]
-            elif(SwapId == 2):
+            elif(SwapID == 2):
                 self.Arrangement.TileSwapper(7, 8)
                 self.PreviousMove = [7, 8]
                 
@@ -268,16 +267,16 @@ class EightSquares:
             if (self.PreviousMove[0] == 5 and self.PreviousMove[1] == 8):
                 BestCost = 1000
                 SwapID = 0
-            elif():
-                Move = deepcopy(self.Arrangement)
+            else:
+                Move.state = deepcopy(self.Arrangement.state)
                 Move.TileSwapper(8, 5)
                 BestCost = Move.SolutionDistance()
                 SwapID = 0
             if (self.PreviousMove[0] != 7 or self.PreviousMove[1] != 8):
-                Move1 = deepcopy(self.Arrangement)
-                Move1.TileSwapper(8, 7)
-                Cost = Move1.SolutionDistance()
-            if (Cost < BestCost):
+                Move.state = deepcopy(self.Arrangement.state)
+                Move.TileSwapper(8, 7)
+                Cost = Move.SolutionDistance()
+            if (Cost < BestCost or (Cost == BestCost and randint(0,1) == 0)):
                 BestCost = Cost
                 SwapID = 1
             if (SwapID == 0):
@@ -312,16 +311,12 @@ class TileConfiguration:
         return HowMuch
     
     def Randomize(self):
-<<<<<<< Updated upstream
-        random.shuffle(self.state)
-=======
         shuffle(self.state)
->>>>>>> Stashed changes
         
     def TileSwapper(self, i, j):
-        temp = state[i]
-        state[i] = state[j]
-        state[j] = temp
+        temp = self.state[i]
+        self.state[i] = self.state[j]
+        self.state[j] = temp
         
     def SameTiles(self, other):
         for i in range(9):
@@ -333,25 +328,38 @@ class TileConfiguration:
         for i in range(9):
             if self.state[i] == 0:
                 return i
- 
-                           
+    
+    def Orientation(self):
+        index = 0
+        sum = 0
+        for i in range(9):
+            if self.state[i] != 0:
+                sum = sum + abs(self.state[i]-index)
+                index + index+1
+        if mod(sum,4) == 0:
+            return 0
+        else:
+            return 1
+        
 Problem = EightSquares()
-<<<<<<< Updated upstream
-print Problem
 Problem.Arrangement.Randomize()
-=======
-#Problem.Arrangement.Randomize()
->>>>>>> Stashed changes
 
 Current = Problem
 print "Current Table \n", Current.Arrangement.state[0], Current.Arrangement.state[1], Current.Arrangement.state[2]
 print Current.Arrangement.state[3], Current.Arrangement.state[4], Current.Arrangement.state[5]
 print Current.Arrangement.state[6], Current.Arrangement.state[7], Current.Arrangement.state[8]
 print "Distance = ", Current.Arrangement.SolutionDistance()
-while (Current.Arrangement.SolutionDistance() > 0):
+Attempts = 0
+while (Current.Arrangement.SolutionDistance() > 0 and Attempts < 1000):
     Current.MakeNextMove()
     print "Current Table \n", Current.Arrangement.state[0], Current.Arrangement.state[1], Current.Arrangement.state[2]
     print Current.Arrangement.state[3], Current.Arrangement.state[4], Current.Arrangement.state[5]
     print Current.Arrangement.state[6], Current.Arrangement.state[7], Current.Arrangement.state[8]
     print "Distance = ", Current.Arrangement.SolutionDistance()
-    raw_input()
+    Attempts = Attempts+1
+ 
+    
+if (Attempts < 1000):
+    print "Success in ", Attempts, "tries"
+else:
+    print "I give up"
