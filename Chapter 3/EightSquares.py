@@ -330,20 +330,22 @@ class TileConfiguration:
                 return i
     
     def Orientation(self):
-        index = 0
-        sum = 0
+        Flipper = 0
+        Mirror = deepcopy(self)
         for i in range(9):
-            if self.state[i] != 0:
-                sum = sum + abs(self.state[i]-index)
-                index + index+1
-        if mod(sum,4) == 0:
-            return 0
-        else:
-            return 1
+            for j in range(8):
+                if (Mirror.state[j] > Mirror.state[j+1]):
+                    Mirror.TileSwapper(j,j+1)
+                    if Mirror.state[j] != 0 :
+                        Flipper = Flipper+1
+        return Flipper%2
         
 Problem = EightSquares()
-Problem.Arrangement.Randomize()
-
+parity = 1
+while (parity == 1):
+    Problem.Arrangement.Randomize()
+    parity = Problem.Arrangement.Orientation()
+    
 Current = Problem
 print "Current Table \n", Current.Arrangement.state[0], Current.Arrangement.state[1], Current.Arrangement.state[2]
 print Current.Arrangement.state[3], Current.Arrangement.state[4], Current.Arrangement.state[5]
