@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='us-ascii'?>
+
+<!--  A SAMPLE set of slides  -->
+
+<Map 
+    title="One"
+	type="ShapeRunner"
+    >
+
+    <shape>
+      <point>110,108</point>
+      <point>192,153</point>
+      <point>260,64</point>
+      <point>192,25</point>
+    </shape>
+	
+	<shape>
+      <point>75,185</point>
+      <point>370,185</point>
+      <point>370,255</point>
+      <point>75,255</point>
+    </shape>
+	
+	<shape>
+      <point>275,160</point>
+      <point>360,160</point>
+      <point>320,30</point>
+    </shape>
+
+
+</Map>

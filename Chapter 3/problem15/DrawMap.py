@@ -9,10 +9,10 @@ pointB = 224,36
 
 im = Image.new("RGB",size,"white")
 
-black     =   (0,0,0)
-blue       =   (0,0,255)
-red       =      (255,0,0)
-green     =     (0,255,0)
+black   =   (0,0,0)
+blue    =   (0,0,255)
+red      =      (255,0,0)
+green =     (0,255,0)
 
 
 def drawLine(im, pointA, pointB):
@@ -101,19 +101,17 @@ class Line:
             
         #print "draw X"
         
-        color = green
-        
         for index in range(left,right,1):
             y = (self.getValue(index))
             #print "X",index,"Y",y
             if y != None:
-                im.putpixel((index,int(y)),color)
+                im.putpixel((index,int(y)),green)
         
         #print "draw Y"
         for index in range(top,bottom,1):
             x = (self.getX(index))
             if x != None:
-                im.putpixel((int(x),index),color)
+                im.putpixel((int(x),index),green)
     
 
 
