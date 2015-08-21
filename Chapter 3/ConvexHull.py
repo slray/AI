@@ -7,20 +7,40 @@ class Hull:
 		self.Outline = []
 		if lstOfPoints:
 			self.Outline = lstOfPoints
+	def __len__(self):
+		return len(self.Outline)
+	
+	def get_point(self,index):
+		#print type(index),index
+		#print type(len(self)),len(self)
+		#print(int(index)%len(self))
+		
+		return self.Outline[index%len(self)]
 		
 	def InsideHull(self, sample):
-		if len(self) < 3 : return 0
-		Crossings = 0
-		span = len(self.Outline)
-		PolyTemp = Hull()
-		for i in range(len(self.Outline)):
-			insert.PolyTemp(diff(self.Outline[i], sample))
-		for i in range(len(PolyTemp)-1):
-			if PolyTemp.Outline[i].y * PolyTemp.Outline[i+1].y <= 0:
-				Above = PolyTemp.Outline[i].x * PolyTemp.Outline[i+1].y - PolyTemp.Outline[i].y*PolyTemp.Outline[i+1].x
-				Below = PolyTemp.Outline[i+1].x - PolyTemp.Outline[i].y
-				if Above * Below > 0: Crossings = 1 - Crossings
-		return Crossings
+		
+		for index in range(len(self)):
+			#print index
+			#print(self.get_point(index))
+			#print(self.get_point(index+1))
+			if sample.OnYourLeft(self.get_point(index), self.get_point(index+1)) == 0:
+				return False
+		return True
+			
+#			
+#		return 
+#		if len(self) < 3 : return 0
+#		Crossings = 0
+##        span = len(self.Outline)
+#		PolyTemp = []
+#		for i in range(len(self.Outline)):
+#			PolyTemp.append(self.Outline[i].diff(sample))
+#		for i in range(len(PolyTemp)-1):
+#			if self.Outline[i].y * self.Outline[i+1].y <= 0:
+#				Above = self.Outline[i].x * self.Outline[i+1].y - self.Outline[i].y*self.Outline[i+1].x
+#				Below = self.Outline[i+1].x - self.Outline[i].y
+#				if Above * Below > 0: Crossings = 1 - Crossings
+#		return Crossings
 	
 	def Convex(self):
 		GrahamList = []
@@ -61,7 +81,7 @@ class Hull:
 			iplus = (i+1)%len(self.Outline)
 			if self.Outline[i].CrossedLines(self.Outline[iplus], pt1, pt2):
 				return 1
-		return 0	
+		return 0    
 		
 class Point:
 	def __init__(self, x, y):
@@ -99,7 +119,7 @@ class Point:
 			
 	def CrossedLines(self, selfEnd, p1, p2):
 		#if (self == p1) and (selfEnd == p2):
-		#	return 0
+		#   return 0
 		
 		a = self.diff(selfEnd)
 		b = p1.diff(p2)
@@ -108,31 +128,31 @@ class Point:
 		if det == 0.0:    #lines are parallel
 			#angle = (selfEnd.x-self.x)*(p1.x-self.x) + (selfEnd.y-self.y)*(p1.y-self.y)
 			#try:
-			#	angle /= math.sqrt((selfEnd.x-self.x)*(selfEnd.x-self.x) + (selfEnd.y-self.y)*(selfEnd.y-self.y))
-			#	angle /= math.sqrt((p1.x-self.x)*(p1.x-self.x) + (p1.y-self.y)*(p1.y-self.y))
+			#   angle /= math.sqrt((selfEnd.x-self.x)*(selfEnd.x-self.x) + (selfEnd.y-self.y)*(selfEnd.y-self.y))
+			#   angle /= math.sqrt((p1.x-self.x)*(p1.x-self.x) + (p1.y-self.y)*(p1.y-self.y))
 			#except:
-			#	print "Divide by Zero"
-			#	print "Self",self
-			#	print "S1", selfEnd
-			#	print "P1", p1
-			#	print "P2", p2
+			#   print "Divide by Zero"
+			#   print "Self",self
+			#   print "S1", selfEnd
+			#   print "P1", p1
+			#   print "P2", p2
 			#if abs(angle) == 1.0: # collinear lines
-			#	#if self.x == selfEnd.x:
-			#	#	alpha = p1.x/(self.x-selfEnd.x)
-			#	#else:
-			#	#	alpha = p1.y / (self.y-selfEnd.y)
-			#	#if alpha >= 0.0 and alpha <= 1.0:
-			#	#	return 1
-			#	#if self.x == selfEnd.x:
-			#	#	beta = p2.x/(self.x-selfEnd.x)
-			#	#else:
-			#	#	beta = p1.y / (self.y-selfEnd.y)
-			#	#if beta >= 0.0 and beta <= 1.0:
-			#	#	return 1
-			#	#if alpha*beta > 0:
-			#	#	return 0
-			#	#else: return 1
-			#	return 1
+			#   #if self.x == selfEnd.x:
+			#   #   alpha = p1.x/(self.x-selfEnd.x)
+			#   #else:
+			#   #   alpha = p1.y / (self.y-selfEnd.y)
+			#   #if alpha >= 0.0 and alpha <= 1.0:
+			#   #   return 1
+			#   #if self.x == selfEnd.x:
+			#   #   beta = p2.x/(self.x-selfEnd.x)
+			#   #else:
+			#   #   beta = p1.y / (self.y-selfEnd.y)
+			#   #if beta >= 0.0 and beta <= 1.0:
+			#   #   return 1
+			#   #if alpha*beta > 0:
+			#   #   return 0
+			#   #else: return 1
+			#   return 1
 			return 0. # parallel but not collinear, no intersection
 		det = 1.0 / det
 		m11 = b.y * det
@@ -144,7 +164,7 @@ class Point:
 		beta = m21 * c.x + m22 * c.y
 		beta *= -1.0
 		if beta <= 0 or beta >= 1.0: return 0
-		return 1			
+		return 1            
 
 
 class GrahamPoint:
@@ -163,16 +183,16 @@ class GrahamPoint:
 	
 #Group = Hull()
 #for i in range(10):
-#	x = random.randint(-10,10)
-#	y = random.randint(-10,10)
-#	Group.Outline.insert(i,Point(x,y))
+#   x = random.randint(-10,10)
+#   y = random.randint(-10,10)
+#   Group.Outline.insert(i,Point(x,y))
 #print "Initial Points"
 #for i in range(len(Group.Outline)):
-#	print Group.Outline[i].x, Group.Outline[i].y
+#   print Group.Outline[i].x, Group.Outline[i].y
 #print""
 #Group.Convex()
 #print "After Hull"
 #for i in range(len(Group.Outline)):
-#	print Group.Outline[i].x, Group.Outline[i].y
+#   print Group.Outline[i].x, Group.Outline[i].y
 
 

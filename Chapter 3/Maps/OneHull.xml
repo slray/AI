@@ -21,8 +21,8 @@
     
 	<shape>
       <point>75,185</point>
-      <point>370,185</point>
-      <point>370,255</point>
+      <point>270,185</point>
+      <point>270,255</point>
       <point>75,255</point>
     </shape>
 
